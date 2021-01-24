@@ -24,13 +24,6 @@ export default StyleSheet.create({
     fontSize: 24,
   },
 
-  dealBox: {
-    marginBottom: 20,
-    paddingBottom: 20,
-    borderColor: '#ccc',
-    borderBottomWidth: 1
-  },
-
   imageContainer: {
     alignItems: 'center',
     justifyContent: 'center',

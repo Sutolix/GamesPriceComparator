@@ -1,60 +1,56 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, ScrollView, Image, Linking } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, Linking, Pressable } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native'
 
-var axios = require('axios');
-var config = {
-  method: 'get',
-  url: 'https://www.cheapshark.com/api/1.0/deals',
-};
+import styles from './styles.js'
+
+import api from '../../services/api';
 
 export default function Home() {
 
+  const navigation = useNavigation()
+
   const [games, setGames] = useState([])
 
-    const styles = StyleSheet.create({
-      stretch: {
-        width: 250,
-        height: 250,
-        resizeMode: 'contain',
-        backgroundColor: '#DDDDDD',
-      },
-    });
+  function navigateToDetail(dealID) {
+    //nome da rota
+    navigation.navigate('Details', { dealID })
+  }
 
-  function LoadGames() {
-    axios(config)
-    .then(function (response) {
-      setGames(response.data);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+
+  async function LoadGames() {
+
+    try {
+      await api.get(`deals`).then(response => {
+        setGames(response.data)
+      })
+
+    } catch (error) {
+      console.log(error)
+    }
+
   }
 
   useEffect(() => {
     LoadGames()
   }, [])
 
-  function openOnBroswer(dealID) {
-    Linking.openURL(`https://www.cheapshark.com/redirect?dealID=${dealID}`)
-  }
-
-  return(
-    <View style={{ backgroundColor: 'gray', padding: 10}}>
-      <View style={{alignItems: 'center', marginBottom: 20}}>
-        <Text>The Big Promotinos Just Here!</Text>
+  return (
+    <View style={styles.container}>
+      <View style={styles.pageHeader}>
+        <Text style={styles.pageHeaderText}>The Big Promotinos Just Here!</Text>
       </View>
-      <ScrollView>
+      <ScrollView style={styles.dealsContainer}>
         {games.map((i) =>
-          <View style={{marginBottom: 40}} key={i.dealID}>
+          <View style={styles.dealBox} key={i.dealID}>
 
-            <TouchableHighlight
-              activeOpacity={0.6}
-              underlayColor="#DDDDDD"
-              onPress={()=> openOnBroswer(i.dealID)}
+            <Pressable
+              style={styles.imageContainer}
+              onPress={() => navigateToDetail(i.dealID)}
             >
-              <Image style={styles.stretch} source={{uri: i.thumb}}  />
-            </TouchableHighlight>
+              <Image style={styles.imageCover} source={{ uri: i.thumb }} />
+            </Pressable>
 
             <Text>Title: {i.title}</Text>
             <Text>Sale Price: {i.salePrice}</Text>
@@ -65,7 +61,6 @@ export default function Home() {
           </View>)
         }
       </ScrollView>
-
     </View>
   )
 }
