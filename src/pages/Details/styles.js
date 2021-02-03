@@ -6,14 +6,11 @@ export default StyleSheet.create({
     flex: 1,
     paddingHorizontal: 24,
     padding: Constants.statusBarHeight + 20,
-    backgroundColor: 'gray',
+    backgroundColor: '#0B3948',
   },
   
   pageHeader: {
-    alignItems: 'center',
     marginBottom: 20,
-    padding: 10,
-    backgroundColor: '#16db93',
     borderRadius: 10,
   },
   
@@ -34,8 +31,14 @@ export default StyleSheet.create({
     width: 250,
     height: 250,
     resizeMode: 'contain',
-    backgroundColor: 'white',
   },
+
+  cheaperStoresItem: {
+    marginBottom:10,
+    backgroundColor:'#9ED0E6',
+    padding: 10,
+  },
+
 
 
 })

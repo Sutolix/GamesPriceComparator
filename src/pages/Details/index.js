@@ -77,6 +77,14 @@ export default function Details() {
       </View>
       {isLoading ? <Text>Loading</Text> :
       <View>
+        <View style={styles.imageContainer}>
+          <Image style={styles.imageCover} source={{ uri: gameInfo.thumb }} />
+        </View>
+
+        <Pressable onPress={() => openOnBroswer(dealID)}>
+          <Text>Go to shop</Text>
+        </Pressable>
+
         <ScrollView>
             <Text>Name: {gameInfo.name}</Text>
             <Text>Publisher: {gameInfo.publisher}</Text>
@@ -89,15 +97,14 @@ export default function Details() {
           style={{height:500, marginTop:20}}
           keyExtractor={item => item.id}
           renderItem={({index}) => (
-            <View style={{marginBottom:10, backgroundColor:'green'}}>
-              <Text>dealID:</Text>
-              <Text>{gameInfo.cheaperStores[index].dealID}</Text>
+            <View style={styles.cheaperStoresItem}>
+              <View style={styles.cheaperBoxContent}>
+                <Text>Retail Price:</Text>
+                <Text>{gameInfo.cheaperStores[index].retailPrice}</Text>
 
-              <Text>retailPrice:</Text>
-              <Text>{gameInfo.cheaperStores[index].retailPrice}</Text>
-
-              <Text>salePrice:</Text>
-              <Text>{gameInfo.cheaperStores[index].salePrice}</Text>
+                <Text>Sale Price:</Text>
+                <Text>{gameInfo.cheaperStores[index].salePrice}</Text>
+              </View>
             </View>
           )}
         />

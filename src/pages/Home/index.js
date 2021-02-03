@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, ScrollView, Image, Linking, Pressable } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, Linking, Pressable, FlatList } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native'
 
@@ -22,7 +22,7 @@ export default function Home() {
   async function LoadGames() {
 
     try {
-      await api.get(`deals`).then(response => {
+      await api.get(`deals?limit=5`).then(response => {
         setGames(response.data)
       })
 
@@ -36,31 +36,36 @@ export default function Home() {
     LoadGames()
   }, [])
 
+
   return (
     <View style={styles.container}>
       <View style={styles.pageHeader}>
-        <Text style={styles.pageHeaderText}>The Big Promotinos Just Here!</Text>
+        <Text style={styles.pageHeaderText}>AnyGD</Text>
       </View>
-      <ScrollView style={styles.dealsContainer}>
-        {games.map((i) =>
-          <View style={styles.dealBox} key={i.dealID}>
-
+      <FlatList
+        data={games}
+        style={styles.dealsContainer}
+        keyExtractor={ item => item.id}
+        renderItem={({index}) => (
+          <View style={styles.dealBox}>
             <Pressable
               style={styles.imageContainer}
-              onPress={() => navigateToDetail(i.dealID)}
+              onPress={() => navigateToDetail(games[index].dealID)}
             >
-              <Image style={styles.imageCover} source={{ uri: i.thumb }} />
+              <Image style={styles.imageCover} source={{ uri: games[index].thumb }} />
             </Pressable>
 
-            <Text>Title: {i.title}</Text>
-            <Text>Sale Price: {i.salePrice}</Text>
-            <Text>Normal Price: {i.normalPrice}</Text>
-            <Text>On Sale: {i.isOnSale === '1' ? 'Yes' : 'No'}</Text>
-            <Text>Metacritic Score: {i.metacriticScore}</Text>
-            <Text>Rating: {i.steamRatingPercent}%</Text>
-          </View>)
-        }
-      </ScrollView>
+            <View style={styles.dealBoxContent}>
+              <Text>Title: {games[index].title}</Text>
+              <Text>Sale Price: ${games[index].salePrice}</Text>
+              <Text>Normal Price: ${games[index].normalPrice}</Text>
+              <Text>On Sale: {games[index].isOnSale === '1' ? 'Yes' : 'No'}</Text>
+              <Text>Metacritic Score: {games[index].metacriticScore}</Text>
+              <Text>Rating: {games[index].steamRatingPercent}%</Text>
+            </View>
+          </View>
+        )}
+      />
     </View>
   )
 }
