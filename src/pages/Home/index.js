@@ -45,7 +45,7 @@ export default function Home() {
       <FlatList
         data={games}
         style={styles.dealsContainer}
-        keyExtractor={ item => item.id}
+        keyExtractor={ item => item.dealID}
         renderItem={({index}) => (
           <View style={styles.dealBox}>
             <Pressable
