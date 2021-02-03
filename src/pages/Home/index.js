@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, ScrollView, Image, Linking, Pressable, FlatList } from 'react-native';
-import { TouchableHighlight } from 'react-native-gesture-handler';
+import { Alert, StyleSheet, TouchableHighlight, Text, View, Image, Pressable, FlatList, Modal } from 'react-native';
 import { useNavigation } from '@react-navigation/native'
 
 import styles from './styles.js'
@@ -12,6 +11,7 @@ export default function Home() {
   const navigation = useNavigation()
 
   const [games, setGames] = useState([])
+  const [modalVisible, setModalVisible] = useState(false);
 
   function navigateToDetail(dealID) {
     //nome da rota
@@ -36,36 +36,75 @@ export default function Home() {
     LoadGames()
   }, [])
 
+  function renderBoxModal() {
+    setModalVisible(!modalVisible);
+    loadModal()
+  }
+
+  // () => navigateToDetail(games[index].dealID)
+  //  <Text>Rating: {games[index].steamRatingPercent}%</Text>
+
+  // <Text>Metacritic Score: {games[index].metacriticScore}</Text>
+
+  function loadModal() {
+
+    return (
+      <Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => {
+        Alert.alert('Modal has been closed.');
+      }}>
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          <View>
+          </View>
+          <Text style={styles.modalText}>Hello World!</Text>
+
+          <TouchableHighlight
+            style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
+            onPress={() => {
+              setModalVisible(false);
+            }}>
+            <Text style={styles.textStyle}>Close</Text>
+          </TouchableHighlight>
+        </View>
+      </View>
+    </Modal>
+    )
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.pageHeader}>
         <Text style={styles.pageHeaderText}>AnyGD</Text>
       </View>
+
       <FlatList
         data={games}
         style={styles.dealsContainer}
-        keyExtractor={ item => item.dealID}
-        renderItem={({index}) => (
+        keyExtractor={item => item.dealID}
+        renderItem={({ index }) => (
           <View style={styles.dealBox}>
             <Pressable
               style={styles.imageContainer}
-              onPress={() => navigateToDetail(games[index].dealID)}
-            >
+              onPress={() => {
+                renderBoxModal();
+              }}>
               <Image style={styles.imageCover} source={{ uri: games[index].thumb }} />
             </Pressable>
 
             <View style={styles.dealBoxContent}>
               <Text>Title: {games[index].title}</Text>
-              <Text>Sale Price: ${games[index].salePrice}</Text>
-              <Text>Normal Price: ${games[index].normalPrice}</Text>
-              <Text>On Sale: {games[index].isOnSale === '1' ? 'Yes' : 'No'}</Text>
-              <Text>Metacritic Score: {games[index].metacriticScore}</Text>
-              <Text>Rating: {games[index].steamRatingPercent}%</Text>
+              <Text style={styles.dealBoxNormalPrice}>Normal Price: ${games[index].normalPrice}</Text>
+              <Text style={styles.dealBoxSalePrice}>Sale Price: ${games[index].salePrice}</Text>
             </View>
+
+
           </View>
         )}
       />
     </View>
-  )
+  );
 }
