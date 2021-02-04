@@ -82,10 +82,10 @@ export default function Details() {
         </View>
 
         <Pressable onPress={() => openOnBroswer(dealID)}>
-          <Text>Go to shop</Text>
+          <Text style={styles.shopButton}>Go to shop</Text>
         </Pressable>
 
-        <ScrollView>
+        <ScrollView style={styles.gameInfo}>
             <Text>Name: {gameInfo.name}</Text>
             <Text>Publisher: {gameInfo.publisher}</Text>
             <Text>Price: {gameInfo.salePrice}</Text>

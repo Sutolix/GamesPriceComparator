@@ -39,6 +39,17 @@ export default StyleSheet.create({
     padding: 10,
   },
 
+  shopButton: {
+    fontSize: 18,
+    textTransform: 'uppercase',
+    fontWeight: '900',
+    textAlign: 'center',
+    backgroundColor: 'white',
+    padding: 10,
+  },
 
+  gameInfo: {
+    marginTop: 10,
+  }
 
 })
