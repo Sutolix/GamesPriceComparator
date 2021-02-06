@@ -115,7 +115,26 @@ export default StyleSheet.create({
   modalGameInfo: {
     marginTop: 10,
   },
-
   /*Fim do modal*/
-
+  
+  buttonsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  itemButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '50%',
+    backgroundColor: '#fff'
+  },
+  storesPageButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  ordinationButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  }
 })
