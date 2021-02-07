@@ -48,26 +48,21 @@ export default StyleSheet.create({
     resizeMode: 'cover',
   },
 
-  imageModalCover: {
-    width: 150,
-    height: 150,
-    resizeMode: 'contain',
-  },
-
+  
   dealBoxContent: {
     justifyContent: 'center',
     padding: 5,
   },
-
+  
   dealBoxNormalPrice: {
     fontSize: 14,
     color: '#ffffff99',
   },
-
+  
   dealBoxSalePrice: {
     fontSize: 16,
   },
-
+  
   /*Modal*/
   centeredView: {
     flex: 1,
@@ -76,7 +71,6 @@ export default StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
-    margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
@@ -89,6 +83,16 @@ export default StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+  modalImageSection: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10
+  },
+  imageModalCover: {
+    width: 200,
+    height: 200,
+    resizeMode: 'contain',
   },
   modalButtonsSection: {
     flexDirection: 'row',
@@ -133,8 +137,33 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  ordinationModalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textTransform: 'uppercase'
+  },
   ordinationButton: {
     flexDirection: 'row',
     alignItems: 'center',
-  }
+  },
+  buttonsOrdinationSection: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  ordinationButtonItem: {
+    width: '33.33%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#0B3948',
+    margin: 5,
+    padding: 5,
+  },
+  sortText: {
+    fontSize: 14,
+    fontWeight: '600',
+  },
 })

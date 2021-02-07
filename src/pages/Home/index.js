@@ -16,6 +16,7 @@ export default function Home() {
   const [dealsOrdinationModalVisible, setDealsOrdinationModalVisible] = useState(false)
   const [dealPreviewModalVisible, setDealPreviewModalVisible] = useState(false)
   const [dealId, setDealId] = useState('')
+  const [storeName, setStoreName] = useState('')
   const [dealName, setDealName] = useState('')
   const [dealThumb, setDealThumb] = useState('')
   const [dealRating, setDealRating] = useState('')
@@ -67,6 +68,12 @@ export default function Home() {
     setDealThumb(games.thumb)
     setDealRating(games.steamRatingPercent)
     setDealMetacritic(games.metacriticScore)
+
+    stores.forEach((store) => {
+      if(games.storeID === store.storeID) {
+        setStoreName(store.storeName)
+      }
+    })
   }
 
   function showOrdinationModal() {
@@ -122,62 +129,71 @@ export default function Home() {
               <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                   <View>
-                    <Text>Deals Ordination:</Text>
+                    <Text style={styles.ordinationModalTitle}>Deals Ordination:</Text>
                   </View>
-                  <View style={styles.filtersButtons}>
+                  <View style={styles.buttonsOrdinationSection}>
 
                     <TouchableHighlight
+                      style={styles.ordinationButtonItem}
                       onPress={() => { newOrdination('deal-rating') }}
                     >
-                      <Text>Deal Rating</Text>
+                      <Text style={styles.sortText}>Deal Rating</Text>
                     </TouchableHighlight>
 
                     <TouchableHighlight
+                      style={styles.ordinationButtonItem}
                       onPress={() => { newOrdination('title') }}
                     >
-                      <Text>Title</Text>
+                      <Text style={styles.sortText}>Title</Text>
                     </TouchableHighlight>
 
                     <TouchableHighlight
+                      style={styles.ordinationButtonItem}
                       onPress={() => { newOrdination('savings') }}
                     >
-                      <Text>Savings</Text>
+                      <Text style={styles.sortText}>Savings</Text>
                     </TouchableHighlight>
 
                     <TouchableHighlight
+                      style={styles.ordinationButtonItem}
                       onPress={() => { newOrdination('price') }}
                     >
-                      <Text>Price</Text>
+                      <Text style={styles.sortText}>Price</Text>
                     </TouchableHighlight>
 
                     <TouchableHighlight
+                      style={styles.ordinationButtonItem}
                       onPress={() => { newOrdination('metacritic') }}
                     >
-                      <Text>Metacritic</Text>
+                      <Text style={styles.sortText}>Metacritic</Text>
                     </TouchableHighlight>
 
                     <TouchableHighlight
+                      style={styles.ordinationButtonItem}
                       onPress={() => { newOrdination('reviews') }}
                     >
-                      <Text>Reviews</Text>
+                      <Text style={styles.sortText}>Reviews</Text>
                     </TouchableHighlight>
 
                     <TouchableHighlight
+                      style={styles.ordinationButtonItem}
                       onPress={() => { newOrdination('release') }}
                     >
-                      <Text>Release</Text>
+                      <Text style={styles.sortText}>Release</Text>
                     </TouchableHighlight>
 
                     <TouchableHighlight
+                      style={styles.ordinationButtonItem}
                       onPress={() => { newOrdination('store') }}
                     >
-                      <Text>Store</Text>
+                      <Text style={styles.sortText}>Store</Text>
                     </TouchableHighlight>
 
                     <TouchableHighlight
+                      style={styles.ordinationButtonItem}
                       onPress={() => { newOrdination('recent') }}
                     >
-                      <Text>Recent</Text>
+                      <Text style={styles.sortText}>Recent</Text>
                     </TouchableHighlight>
 
                   </View>
@@ -185,9 +201,9 @@ export default function Home() {
                     <TouchableHighlight
                       style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
                       onPress={() => {
-                        console.log('new ordination apply')
+                        setApiSort('')
                       }}>
-                      <Text style={styles.textStyle}>Apply</Text>
+                      <Text style={styles.textStyle}>Reset</Text>
                     </TouchableHighlight>
 
                     <TouchableHighlight
@@ -214,13 +230,16 @@ export default function Home() {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <View>
-              <Image style={styles.imageModalCover} source={{ uri: dealThumb }} />
-            </View>
             <View style={styles.modalGameInfo}>
-              <Text style={styles.modalText}>Title: {dealName}</Text>
-              <Text style={styles.modalText}>Rating: {dealRating}</Text>
-              <Text style={styles.modalText}>Metacritic: {dealMetacritic}</Text>
+              <View style={styles.modalImageSection}>
+                <Image style={styles.imageModalCover} source={{ uri: dealThumb }} />
+              </View>
+              <View style={styles.modalInfosSection}>
+                <Text style={styles.modalText}>Title: {dealName}</Text>
+                <Text style={styles.modalText}>Store: {storeName}</Text>
+                <Text style={styles.modalText}>Rating: {dealRating}</Text>
+                <Text style={styles.modalText}>Metacritic: {dealMetacritic}</Text>
+              </View>
             </View>
             <View style={styles.modalButtonsSection}>
               <TouchableHighlight
