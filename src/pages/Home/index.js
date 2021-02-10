@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { Alert, StyleSheet, TouchableHighlight, Text, View, Image, Pressable, FlatList, Modal } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { MaterialIcons } from '@expo/vector-icons'
@@ -29,37 +29,61 @@ export default function Home() {
     navigation.navigate('Details', { dealID })
   }
 
-
-  async function LoadGames() {
-
-    try {
-      await api.get(`deals?sortBy=${apiSort}`).then(response => {
-        setGames(response.data)
-      })
-
-    } catch (error) {
-      console.log(error)
-    }
-
-  }
-
+  
+  
   async function LoadStores() {
-
+    
     try {
       await api.get(`stores`).then(response => {
         setStores(response.data)
       })
-
+      
     } catch (error) {
       console.log(error)
     }
-
+    
   }
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   async function LoadGames() {
+  
+  //     try {
+  //       await api.get(`deals?sortBy=${apiSort}`).then(response => {
+  //         setGames(response.data)
+  //       })
+  
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  
+  //   }
+
+  //   LoadGames()
+  // },[apiSort])
+
+  const handleOrdination = useCallback(() => {
+    async function LoadGames() {
+  
+      try {
+        await api.get(`deals?sortBy=${apiSort}`).then(response => {
+          setGames(response.data)
+        })
+  
+      } catch (error) {
+        console.log(error)
+      }
+  
+    }
+
     LoadGames()
+  }, [apiSort])
+
+
+  
+  useEffect(() => {
     LoadStores()
   }, [])
+  
 
   function renderBoxModal(games) {
     setDealPreviewModalVisible(!dealPreviewModalVisible);
@@ -82,7 +106,7 @@ export default function Home() {
 
   function newOrdination(sort) {
     setApiSort(sort)
-    LoadGames()
+    handleOrdination()
     setDealsOrdinationModalVisible(!dealsOrdinationModalVisible)
   }
 

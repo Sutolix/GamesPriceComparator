@@ -13,6 +13,7 @@ export default function Details() {
   const dealID = route.params.dealID
 
   const [gameInfo, setGameInfo] = useState({
+    dealID : '',
     cheaperStores : [],
     metacriticScore: '',
     name: '',
@@ -39,6 +40,7 @@ export default function Details() {
         }
 
         setGameInfo({
+          dealID,
           cheaperStores,
           metacriticScore: infos.gameInfo.metacriticScore,
           name: infos.gameInfo.name,
@@ -95,7 +97,7 @@ export default function Details() {
         <FlatList
           data={gameInfo.cheaperStores}
           style={{height:500, marginTop:20}}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.dealID}
           renderItem={({index}) => (
             <View style={styles.cheaperStoresItem}>
               <View style={styles.cheaperBoxContent}>
