@@ -11,6 +11,8 @@ export default function Home() {
 
   const navigation = useNavigation()
 
+  const [load, setLoad] = useState(true)
+
   const [games, setGames] = useState([])
   const [stores, setStores] = useState([])
   const [dealsOrdinationModalVisible, setDealsOrdinationModalVisible] = useState(false)
@@ -28,9 +30,11 @@ export default function Home() {
     //nome da rota
     navigation.navigate('Details', { dealID })
   }
+  function navigateToStores(stores) {
+    //nome da rota
+    navigation.navigate('Stores', { stores })
+  }
 
-  
-  
   async function LoadStores() {
     
     try {
@@ -44,46 +48,27 @@ export default function Home() {
     
   }
 
-  // useEffect(() => {
-  //   async function LoadGames() {
-  
-  //     try {
-  //       await api.get(`deals?sortBy=${apiSort}`).then(response => {
-  //         setGames(response.data)
-  //       })
-  
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  
-  //   }
+  async function LoadGames() {
+    try {
+      await api.get(`deals?sortBy=${apiSort}`).then(response => {
+        setGames(response.data)
+      })
 
-  //   LoadGames()
-  // },[apiSort])
-
-  const handleOrdination = useCallback(() => {
-    async function LoadGames() {
-  
-      try {
-        await api.get(`deals?sortBy=${apiSort}`).then(response => {
-          setGames(response.data)
-        })
-  
-      } catch (error) {
-        console.log(error)
-      }
-  
+    } catch (error) {
+      console.log(error)
     }
+    setLoad(false)
+  }
 
-    LoadGames()
-  }, [apiSort])
-
-
-  
   useEffect(() => {
+    LoadGames()
     LoadStores()
   }, [])
-  
+
+  const handleOrdination = useCallback(() => {
+    setLoad(true)
+    LoadGames()
+  }, [apiSort])
 
   function renderBoxModal(games) {
     setDealPreviewModalVisible(!dealPreviewModalVisible);
@@ -124,7 +109,7 @@ export default function Home() {
           style={styles.itemButton}
           activeOpacity={0.6}
           onPress={() => {
-            console.log('store page')
+            navigateToStores(stores)
           }}
         >
           <View style={styles.storesPageButton}>
@@ -288,6 +273,10 @@ export default function Home() {
         </View>
       </Modal>
 
+
+      {load ?
+      <Text>Loading...</Text>
+      :
       <FlatList
         data={games}
         style={styles.dealsContainer}
@@ -312,6 +301,8 @@ export default function Home() {
           </View>
         )}
       />
+      }
+
     </View>
   );
 }
