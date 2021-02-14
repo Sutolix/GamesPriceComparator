@@ -1,72 +1,45 @@
 import { StyleSheet } from 'react-native'
-import Constants from 'expo-constants'
 
 //C42021
 
 export default StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 24,
-    padding: Constants.statusBarHeight + 20,
-    backgroundColor: '#0B3948',
+  dealBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+    borderRadius: 5,
+    borderColor: '#ccc',
+    borderBottomWidth: 1,
+
+    backgroundColor: '#9ED0E6',
   },
 
-  pageHeader: {
-    marginBottom: 20,
-    padding: 10,
-    borderRadius: 10,
+  imageContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    backgroundColor: 'white',
   },
 
-  pageHeaderText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontFamily: 'Harmattan_400Regular',
-    fontSize: 22,
+  imageCover: {
+    width: 150,
+    height: 150,
+    resizeMode: 'cover',
   },
-  buttonsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  itemButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
+
+  
+  dealBoxContent: {
     justifyContent: 'center',
-    width: '50%',
-    backgroundColor: '#fff'
-  },
-  storesPageButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  ordinationModalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    textTransform: 'uppercase'
-  },
-  ordinationButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  buttonsOrdinationSection: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 20,
-    marginBottom: 20,
-  },
-  ordinationButtonItem: {
-    width: '33.33%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#0B3948',
-    margin: 5,
     padding: 5,
   },
-  sortText: {
+  
+  dealBoxNormalPrice: {
     fontSize: 14,
-    fontWeight: '600',
+    color: '#ffffff99',
+  },
+  
+  dealBoxSalePrice: {
+    fontSize: 16,
   },
   /*Modal*/
   centeredView: {

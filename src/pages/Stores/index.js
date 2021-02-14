@@ -10,6 +10,10 @@ export default function Stores() {
   const route = useRoute()
   const stores = route.params.stores
 
+  function navigateToDealsByStore(storeID, storeName) {
+    navigation.navigate('DealsByStore', {storeID, storeName})
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.pageHeader}>
@@ -22,10 +26,19 @@ export default function Stores() {
         keyExtractor={item => item.storeID}
         numColumns={3}
         renderItem={({ index }) => (
-          <View style={styles.storeBox}>
-            <Image style={styles.storeCover} source={{ uri: `https://www.cheapshark.com/${stores[index].images.logo}`}} />
-            <Text style={styles.storeName}>{stores[index].storeName}</Text>
-          </View>
+          <TouchableHighlight
+            style={styles.storeBox}
+            activeOpacity={0.6}
+            underlayColor="#ddd"
+            onPress={() => {
+              navigateToDealsByStore(stores[index].storeID, stores[index].storeName)
+            }}
+            >
+            <View style={styles.storeInfos}>
+              <Image style={styles.storeCover} source={{ uri: `https://www.cheapshark.com/${stores[index].images.logo}`}} />
+              <Text style={styles.storeName}>{stores[index].storeName}</Text>
+            </View>
+          </TouchableHighlight>
         )}
       />
     </View>
